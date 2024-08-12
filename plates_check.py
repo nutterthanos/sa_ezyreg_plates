@@ -29,13 +29,16 @@ def send_request_with_retry(plate_number, retries=3):
             response = requests.post(url, json=payload, headers=headers, verify=False)
             if response.status_code == 200:
                 return response.json()
+            elif response.status_code == 400:
+                print(f'HTTP 400 error encountered for {plate_number}, giving up.')
+                return None  # Stop retrying and give up
             else:
                 print(f'Received status code {response.status_code} for {plate_number}')
         except requests.exceptions.RequestException as e:
             print(f'Attempt {attempt + 1} failed for {plate_number}: {e}')
         attempt += 1
         if attempt < retries:
-            time.sleep(4.2)  # Wait before retrying
+            time.sleep(5)  # Wait before retrying
     return None  # Return None if all retries fail
 
 # Function to check registration for each plate number and save the response
