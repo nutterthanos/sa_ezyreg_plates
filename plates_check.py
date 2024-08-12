@@ -35,7 +35,7 @@ def send_request_with_retry(plate_number, retries=3):
             print(f'Attempt {attempt + 1} failed for {plate_number}: {e}')
         attempt += 1
         if attempt < retries:
-            time.sleep(5)  # Wait before retrying
+            time.sleep(4.2)  # Wait before retrying
     return None  # Return None if all retries fail
 
 # Function to check registration for each plate number and save the response
